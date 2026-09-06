@@ -1,44 +1,43 @@
----
-title: Bacterial Colony Classifier
-emoji: 🧫
-colorFrom: blue
-colorTo: green
-sdk: gradio
-sdk_version: 6.26.0
-python_version: 3.11
-app_file: app.py
-pinned: false
----
-
 # Bacterial Colony Classifier
 
-A deep learning application for classifying bacterial colony images into 19 bacterial species using ResNet-18.
+A deep learning application for classifying high-resolution bacterial colony images into 19 bacterial species using ResNet-18.
 
-## Models
+## **Models**
 
-The application provides two trained ResNet-18 models:
+Two ResNet-18 classification models are provided:
 
-- **Model 1:** Experiment A — unseen-strain split
-- **Model 2:** Experiment B — random image-level split
+* **Model 1:** Experiment A — unseen-strain split
+* **Model 2:** Experiment B — random image-level split
 
-Users can select either model and upload a bacterial colony image to obtain the predicted species and confidence score.
+Both models classify complete plate images without colony bounding-box cropping.
 
-## Input
+## **Preprocessing**
 
-The model accepts bacterial colony images and applies the same preprocessing used during model development:
+Input images are processed using the same pipeline used during model development:
 
-- Resize with padding to 224 × 224
-- Convert to RGB
-- Convert to tensor
-- ImageNet normalization
+* Resize with padding to 224 × 224 pixels
+* Convert to RGB
+* Convert to tensor
+* ImageNet normalization
 
-## Output
+## **Prediction**
 
-The application displays:
+The application allows users to:
 
-- Predicted bacterial species
-- Prediction confidence
+* Upload a bacterial colony image
+* Select Model 1 or Model 2
+* Obtain the predicted bacterial species
+* View the prediction confidence
 
-## Disclaimer
+## **Technologies**
 
-This application is intended for research and educational purposes and should not be used as a substitute for laboratory identification or clinical diagnosis.
+Python, PyTorch, Torchvision, ResNet-18, Streamlit, Pillow
+
+## **Deployment**
+
+The application is designed for deployment using Streamlit Community Cloud.
+
+## **Disclaimer**
+
+This application is intended for research and educational purposes only. It should not be used as a substitute for laboratory identification or clinical diagnosis.
+

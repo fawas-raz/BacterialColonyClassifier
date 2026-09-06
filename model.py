@@ -90,7 +90,7 @@ image_transform = transforms.Compose([
 ])
 
 #Model 1
-model1 = models.resnet18(pretrained=True)
+model1 = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
 model1.fc = nn.Linear(model1.fc.in_features, 19)
 
 model1.load_state_dict(
@@ -104,7 +104,7 @@ model1.load_state_dict(
 model1.eval()
 
 #Model 2
-model2 = models.resnet18(pretrained=True)
+model2 = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
 model2.fc = nn.Linear(model2.fc.in_features, 19)
 
 model2.load_state_dict(

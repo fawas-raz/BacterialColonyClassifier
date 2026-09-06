@@ -1,60 +1,39 @@
-import gradio as gr
+import streamlit as st
+from PIL import Image
 
 from model import model1, model2, predict_image
 
 
-import gradio as gr
+st.title("Bacterial Colony Classifier")
 
-def gradio_predict(image, selected_model):
+image_input = st.file_uploader(
+    "Upload Colony Image",
+    type=["jpg", "jpeg", "png"]
+)
 
-    if selected_model == "Model 1":
-        model = model1
+selected_model = st.selectbox(
+    "Select Model",
+    ["Model 1", "Model 2"]
+)
+
+if st.button("Submit"):
+
+    if image_input is not None:
+
+        image = Image.open(image_input)
+
+        if selected_model == "Model 1":
+            model = model1
+        else:
+            model = model2
+
+        prediction, confidence = predict_image(image, model)
+
+        st.write("### Prediction")
+        st.write(prediction)
+
+        st.write("### Confidence")
+        st.write(f"{confidence * 100:.2f}%")
+
     else:
-        model = model2
-
-    prediction, confidence = predict_image(image, model)
-
-    return prediction, f"{confidence * 100:.2f}%"
-
-
-with gr.Blocks() as demo:
-
-    gr.Markdown("# Bacterial Colony Classifier")
-
-    image_input = gr.Image(
-        type="pil",
-        label="Upload Colony Image"
-    )
-
-    model_input = gr.Dropdown(
-        choices=["Model 1", "Model 2"],
-        value="Model 1",
-        label="Select Model"
-    )
-
-    submit_button = gr.Button("Submit")
-
-    prediction_output = gr.Textbox(
-        label="Prediction",
-        visible=False
-    )
-
-    confidence_output = gr.Textbox(
-        label="Confidence",
-        visible=False
-    )
-
-    def show_results(image, selected_model):
-        prediction, confidence = gradio_predict(image, selected_model)
-        return (
-            gr.update(value=prediction, visible=True),
-            gr.update(value=confidence, visible=True)
-        )
-
-    submit_button.click(
-        fn=show_results,
-        inputs=[image_input, model_input],
-        outputs=[prediction_output, confidence_output]
-    )
-
-demo.launch()
+        st.warning("Please upload an image.")
